@@ -13,5 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\TestController::class, 'home']); // se for "/" executa home do test controller
+Route::get('/', [App\Http\Controllers\TestController::class, 'homepage']); // se for "/" executa home do test controller
 Route::get('/developteam', [App\Http\Controllers\TestController::class, 'developteam']);
+Route::get('/special', [App\Http\Controllers\TestController::class, 'special']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
