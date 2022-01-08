@@ -16,8 +16,10 @@ class Empresa extends Migration
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
             $table->string('nome_empresa');
-            $table->string('posicao');
-            $table->string('localizacao');
+            $table->string('posicao')->default("Not-Defined");
+            $table->string('categoria');
+            $table->string('pais');
+            $table->string('distrito');
             $table->string('requisitos');
             $table->string('tipo');
         });
