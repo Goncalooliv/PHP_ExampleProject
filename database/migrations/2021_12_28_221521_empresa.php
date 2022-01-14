@@ -22,6 +22,7 @@ class Empresa extends Migration
             $table->string('distrito');
             $table->string('requisitos');
             $table->string('tipo');
+            $table->string('contacto');
         });
     }
 

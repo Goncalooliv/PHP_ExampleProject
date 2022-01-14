@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-md-8">
+<div class="col-md-7">
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="row">
@@ -70,7 +70,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-secondary" href="{{('/dashboard')}}">Back</a>
+                      <a class="btn btn-secondary" href="{{('/anuncios')}}">Back</a>
                     </div>
                   </div>
                 </div>

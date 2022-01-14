@@ -13,7 +13,7 @@
 </div>
 
 
-<form action="{{ route('/anuncios/update/'.$anuncios->id) }}" method="POST">
+<form action="{{ url('/anuncios/update/'.$anuncios->id) }}" method="POST">
     @csrf
 
     <div class="row">

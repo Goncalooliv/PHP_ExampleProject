@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
   <div class="table-responsive col-md-6">
-            <table class="table table-striped">
+            <table class="table table-striped" id="utilizadores">
               <thead>
                 <tr>
                   <th class="col-md-1">#</th>
@@ -21,7 +21,6 @@
                   <td class="col-md-4">
                   <form action="{{ url('users/destroy/'.$users->id) }}" method="POST">
                     <a class="btn btn-secondary btn-sm" href="{{ url('user/show',$users->id)}}">Show</a>
-                    <a class="btn btn-secondary btn-sm" href="{{ url('user/edit',$users->id)}}">Edit</a>
                     @csrf
                     <button type="submit" class="btn btn-secondary btn-sm">Delete</button>
                   </form>
@@ -35,7 +34,7 @@
             </table>
           </div>
           <div class="table-responsive col-md-6">
-            <table class="table table-striped">
+            <table class="table table-striped" id = "empresa">
               <thead>
                 <tr>
                   <th class="col-md-1">#</th>
@@ -66,5 +65,29 @@
               </tbody>
             </table>
             <a class= "btn btn-secondary" href="{{ url('anuncios/create')}}">Create</a>
+            <script type="text/javascript">
+              $(document).ready(function() 
+            { 
+                $('#empresa').DataTable( 
+              { 
+                "lengthMenu":[[2,5,10,-1],[2,5,10,"All"]],
+                dom: 'Blfrtip',
+                buttons: [
+                  {
+                    extend: 'excelHtml5',
+                    title : 'Excel MK',
+                    text: 'Export to Excel'
+                  },
+                  {
+                    extend: 'pdfHtml5',
+                    title: 'PDF MK',
+                    classname: 'btn_pdf',
+                    text: 'Export to PDF'
+                  },
+                ]
+              });
+
+            });
+            </script>
 </div>
 @endsection

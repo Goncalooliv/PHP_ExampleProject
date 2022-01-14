@@ -11,7 +11,7 @@ Todos os Anuncios
     @forelse($anuncios as $anuncio)
 
     <li class ="list-group-item">
-        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+        <a href="{{ url('anuncios/details',$anuncio->id)}}" class="list-group-item list-group-item-action" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
                 <h4 class="mb-1"><strong>{{$anuncio->nome_empresa}}</strong></h4>
                 <small>3 days ago</small>

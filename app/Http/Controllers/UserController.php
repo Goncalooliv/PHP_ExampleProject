@@ -14,4 +14,11 @@ class UserController extends Controller
     {
         return view('user/show',['users'=>$users]);
     }
+
+    public function destroy(User $users)
+    {
+        $users->delete();
+
+        return redirect('/dashboard');
+    }
 }

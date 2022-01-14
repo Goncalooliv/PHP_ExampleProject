@@ -28,7 +28,7 @@ class AnuncioController extends Controller
             return redirect('/');
         }
             else{
-                $user = User::paginate(10);
+                $user = User::all();
                 $anuncio = Empresas::all();
                 return view('anuncios.info',['user'=>$user, 'anuncio'=>$anuncio]);
             }
@@ -37,12 +37,16 @@ class AnuncioController extends Controller
     public function searchan(Request $request){
         $q = $request->get('q');
 
-        $anuncios = Empresas::where ( 'nome_empresa', 'LIKE', '%' . $q . '%' )->orWhere ('posicao','LIKE','%' . $q . '%')->orWhere ('categoria','LIKE','%' . $q . '%')->orWhere ('pais','LIKE','%' . $q . '%')->orWhere ('distrito','LIKE','%' . $q . '%')->orWhere ('cidade','LIKE','%' . $q . '%')->orWhere ('localidade','LIKE','%' . $q . '%')->orWhere ('tipo','LIKE','%' . $q . '%')->get();
+        $anuncios = Empresas::where ( 'nome_empresa', 'LIKE', '%' . $q . '%' )->orWhere ('posicao','LIKE','%' . $q . '%')->orWhere ('categoria','LIKE','%' . $q . '%')->orWhere ('pais','LIKE','%' . $q . '%')->orWhere ('distrito','LIKE','%' . $q . '%')->orWhere ('tipo','LIKE','%' . $q . '%')->get();
         return view ( 'anuncios.search', ['anuncios'=>$anuncios] );
     }
 
     public function show(Empresas $anuncios){
         return view('anuncios/showanuncio',['anuncios' =>$anuncios]);
+    }
+
+    public function details(Empresas $anuncios){
+        return view('anuncios/details',['anuncios'=>$anuncios]);
     }
 
     public function create(){
@@ -62,6 +66,7 @@ class AnuncioController extends Controller
             'distrito' => 'required',
             'requisitos' => 'required',
             'tipo' => 'required',
+            'contacto' => 'required',
         ]);
 
         $anuncio = new Empresas();
@@ -72,6 +77,7 @@ class AnuncioController extends Controller
         $anuncio->distrito=$request->distrito;
         $anuncio->requisitos=$request->requisitos;
         $anuncio->tipo=$request->tipo;
+        $anuncio->contacto=$request->contacto;
 
         $anuncio->save();
 

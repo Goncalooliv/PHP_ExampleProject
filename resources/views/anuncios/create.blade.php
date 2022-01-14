@@ -32,6 +32,10 @@
         <label for="tipo">Tipo</label>
         <input type="text" name="tipo" id="tipo" class="form-control" placeholder="Ex. Full-time" aria-describedby="helpId">
     </div>
+    <div class="form-group">
+        <label for="contacto">Contacto</label>
+        <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Ex. example@example.com" aria-describedby="helpId">
+    </div>
     <button type="submit" class="btn btn-secondary">Create</button>
 </form>
 @if ($errors->any())

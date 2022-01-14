@@ -10,7 +10,7 @@
 
                 <div class = "card" style="height: 35em;">
                     <div class="card-body">
-                        <img src="{{URL::to('Baga.png')}}" class="rounded mx-auto d-block" width="200" alt="card image">
+                        <img src="{{URL::to('team.jpg')}}" class="rounded mx-auto d-block" width="200" alt="card image">
                         <h4 class ="card-title text-center"> <bold> Gonçalo Oliveira </bold></h4>
                         <h4 class ="card-title text-center"> <bold> 38600 </bold> </h4>
                         <ul class="list-group list-group-flush">
