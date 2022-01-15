@@ -23,7 +23,7 @@
                                     <div class="input-group">
                                         <input type="search" class="form-control" style="border-radius: 20px; margin-left: -40px" name="q" placeholder="Search...">
                                             <button type="submit" class="btn btn-default rounded-circle" >
-                                                <i class="fa fa-search " ></i>
+                                                <em class="fa fa-search " ></em>
                                             </button>
                                     </div>
                                 </form>

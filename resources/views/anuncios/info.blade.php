@@ -3,13 +3,13 @@
 @section('content')
 <div class="row">
   <div class="table-responsive col-md-6">
-            <table class="table table-striped" id="utilizadores">
+            <table class="table table-striped" id="utilizadores" description="tabela de users">
               <thead>
                 <tr>
-                  <th class="col-md-1">#</th>
-                  <th class="col-md-2">Nome</th>
-                  <th class="col-md-3">Email</th>
-                  <th class="col-md-4">Opção</th>
+                  <th id="id" class="col-md-1">#</th>
+                  <th id="nome" class="col-md-2">Nome</th>
+                  <th id="email" class="col-md-3">Email</th>
+                  <th id="option" class="col-md-4">Opção</th>
                 </tr>
               </thead>
               <tbody>
@@ -34,13 +34,13 @@
             </table>
           </div>
           <div class="table-responsive col-md-6">
-            <table class="table table-striped" id = "empresa">
+            <table class="table table-striped" id = "empresa" description="tabela de empresas">
               <thead>
                 <tr>
-                  <th class="col-md-1">#</th>
-                  <th class="col-md-2">Empresa</th>
-                  <th class="col-md-3">Localização</th>
-                  <th class="col-md-4">Opção</th>
+                  <th id="id" class="col-md-1">#</th>
+                  <th id="empresa" class="col-md-2">Empresa</th>
+                  <th id="location" class="col-md-3">Localização</th>
+                  <th id="option" class="col-md-4">Opção</th>
                 </tr>
               </thead>
               <tbody>
