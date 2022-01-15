@@ -3,7 +3,8 @@
 @section('content')
 <div class="row">
   <div class="table-responsive col-md-6">
-            <table class="table table-striped" id="utilizadores" description="tabela de users">
+            <table class="table table-striped" id="utilizadores">
+              <caption>Tabela de Utilizadores</caption>
               <thead>
                 <tr>
                   <th id="id" class="col-md-1">#</th>
@@ -34,7 +35,8 @@
             </table>
           </div>
           <div class="table-responsive col-md-6">
-            <table class="table table-striped" id = "empresa" description="tabela de empresas">
+            <table class="table table-striped">
+            <caption>Tabela de Empresas</caption>
               <thead>
                 <tr>
                   <th id="id" class="col-md-1">#</th>
