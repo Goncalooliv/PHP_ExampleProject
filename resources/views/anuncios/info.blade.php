@@ -65,29 +65,6 @@
               </tbody>
             </table>
             <a class= "btn btn-secondary" href="{{ url('anuncios/create')}}">Create</a>
-            <script type="text/javascript">
-              $(document).ready(function() 
-            { 
-                $('#empresa').DataTable( 
-              { 
-                "lengthMenu":[[2,5,10,-1],[2,5,10,"All"]],
-                dom: 'Blfrtip',
-                buttons: [
-                  {
-                    extend: 'excelHtml5',
-                    title : 'Excel MK',
-                    text: 'Export to Excel'
-                  },
-                  {
-                    extend: 'pdfHtml5',
-                    title: 'PDF MK',
-                    classname: 'btn_pdf',
-                    text: 'Export to PDF'
-                  },
-                ]
-              });
-
-            });
-            </script>
+          </div>
 </div>
 @endsection

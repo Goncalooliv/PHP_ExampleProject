@@ -40,6 +40,66 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="morada" class="col-md-4 col-form-label text-md-right">{{ __('Morada') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="morada" type="morada" class="form-control @error('morada') is-invalid @enderror" name="morada" value="{{ old('morada') }}" required autocomplete="morada">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="zipcode" class="col-md-4 col-form-label text-md-right">{{ __('ZipCode') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="zipcode" type="zipcode" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" value="{{ old('zipcode') }}" required autocomplete="zipcode">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="phoneNumber" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phoneNumber" type="phoneNumber" class="form-control @error('phoneNumber') is-invalid @enderror" name="phoneNumber" value="{{ old('phoneNumber') }}" required autocomplete="phoneNumber">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="tipo" class="col-md-4 col-form-label text-md-right">{{ __('Tipo') }}</label>
+
+                            <div class="col-md-6">
+                                <select class ="form-control" name="tipo" id="tipo">
+                                    <option value="null">---Escolha o Tipo de Utilizador---</option>
+                                    <option value="Empregador">Empregador</option>
+                                    <option value="Candidato">Candidato</option>
+                                </select>
+
+                                @error('tipo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">

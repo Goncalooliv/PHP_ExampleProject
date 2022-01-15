@@ -23,6 +23,14 @@ class Empresa extends Migration
             $table->string('requisitos');
             $table->string('tipo');
             $table->string('contacto');
+            $table->unsignedBigInteger('empresas_id');
+
+
+            $table->foreign('empresas_id', 'empresas_id_fk')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('CASCADE')
+                ->onDelete('RESTRICT');
         });
     }
 

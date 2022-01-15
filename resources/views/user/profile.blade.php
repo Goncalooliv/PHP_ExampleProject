@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="main-body">
           <div class="row gutters-sm">
@@ -12,7 +13,7 @@
                     <div class="mt-3">
                         <h4>{{$users->name}}</h4>
                         <p class="text-secondary mb-1">{{$users->email}}</p>
-                        <a class="btn btn-secondary btn-sm" href="{{('/dashboard')}}">Back</a>
+                        <a class="btn btn-secondary btn-sm" href="{{('/')}}">Back</a>
                     </div>
                   </div>
                 </div>

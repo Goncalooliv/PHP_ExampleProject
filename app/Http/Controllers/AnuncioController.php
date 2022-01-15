@@ -24,7 +24,7 @@ class AnuncioController extends Controller
 
     public function AdminDashboard()
     {
-        if (Auth::user()->tipo != '1'){
+        if (Auth::user()->isAdmin != '1'){
             return redirect('/');
         }
             else{
@@ -76,6 +76,7 @@ class AnuncioController extends Controller
         $anuncio->pais=$request->pais;
         $anuncio->distrito=$request->distrito;
         $anuncio->requisitos=$request->requisitos;
+        $anuncio->empresas_id = Auth()->user()->id;
         $anuncio->tipo=$request->tipo;
         $anuncio->contacto=$request->contacto;
 
@@ -110,5 +111,10 @@ class AnuncioController extends Controller
         $anuncios->delete();
 
         return redirect('/anuncios');
+    }
+
+    public function AnnouncementCreator()
+    {
+        return $this->belongsTo(User::class, 'empresas_id', 'id');
     }
 }

@@ -17,11 +17,16 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->boolean('tipo')->default(false); //Candidato = 0, admin = 1
+            $table->boolean('isAdmin')->default(false); //admin=1 user = 0
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            //morada
+            $table->string('morada');
+            $table->string('zipcode');
+            $table->string('tipo')->nullable();
+            $table->string('phoneNumber');
         });
     }
 

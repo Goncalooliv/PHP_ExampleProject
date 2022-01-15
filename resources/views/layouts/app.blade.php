@@ -11,26 +11,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
-
-
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
-
-
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
-    
-</script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -40,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#6c757d">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img width="40px" src="{{URL::to('/iconhome.png')}}" alt="homepage">
                 </a>
@@ -50,10 +34,18 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav mr-auto">
                         <li class ="nav-item active">
                             <a class="nav-link" href="{{url('/anuncios')}}">Todos os Anúncios </a>
                         </li>
+                        @guest
+
+                        @else
+
+                            @if (Auth::user()->tipo == 'Empregador')
+                                <a class="nav-link" href="{{ url('anuncios/create')}}"> Criar Anuncio</a>
+                            @endif
+                        @endguest
                     </ul>
                     
                     <!-- Middle Of Navbar -->
@@ -74,7 +66,7 @@
                     </div> 
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -90,12 +82,19 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Olá, {{ Auth::user()->name }}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Bem Vindo, {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if (Auth::user()->tipo)
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="user/profile/{{Auth::user()->id}}">Perfil </a>
+
+                                    @if(Auth::user()->tipo == 'Empregador')
+                                        <a class="dropdown-item" href="{{url('anuncios/meusAnuncios')}}">Anuncios</a>
+                                    @endif
+
+                                    @if (Auth::user()->isAdmin)
                                         <a class="dropdown-item" href="{{ url('/dashboard') }}">
                                             Dashboard
                                         </a>

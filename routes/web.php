@@ -18,7 +18,6 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [TestController::class, 'homepage']); // se for "/" executa home do test controller
 Route::get('/developteam', [TestController::class, 'developteam']);
-Route::get('/special', [TestController::class, 'special']);
 
 
 
@@ -31,9 +30,12 @@ Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home
 Route::get('/anuncios', [AnuncioController::class, 'showAll']);
 Route::get('/dashboard',[AnuncioController::class, 'AdminDashboard']);
 Route::get('/user/show/{users}', [UserController::class, 'show']);
+Route::get('/user/profile/{users}',[UserController::class, 'profile']);
 Route::post('/users/destroy/{users}',[UserController::class, 'destroy']);
 Route::get('anuncios/showanuncio/{anuncios}',[AnuncioController::class, 'show']);
 Route::get('anuncios/details/{anuncios}',[AnuncioController::class,'details']);
+Route::get('/user/profileEdit/{users}',[UserController::class,'profileEdit']);
+Route::post('/users/update/{users}', [UserController::class, 'updateAddress']);
 
 Route::get('/searchanuncio',[AnuncioController::class, 'searchan']);
 Route::get('/anuncios/create',[AnuncioController::class, 'create']);
