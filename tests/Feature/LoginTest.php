@@ -11,7 +11,7 @@ class LoginTest extends TestCase
 {
     public function test_login()
     {
-        $user = User::factory()->create();
+        $user = factory(User::class)->create();
 
         $responde = $this->actingAs($user)->withSession(['foo' => 'bar'])->get('/home');
     }
