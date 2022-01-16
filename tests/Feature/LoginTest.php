@@ -8,15 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 class LoginTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+    public function test_if_login(){
+        $response=$this->post('login',[
+            'email'=>'38600@ufp.edu.pt',
+            'password'=>'12345678',
+        ]);
+        $response->assertRedirect('/home');
     }
 }
