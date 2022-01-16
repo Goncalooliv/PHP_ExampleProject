@@ -5,19 +5,15 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    public function loginWithWrongCredentials()
-    {
-        $response = $this->visit('/')
-        ->see('Login')
-        ->type('unknown@example.org', 'email')
-        ->type('invalid-password', 'password')
-        ->check('remember')
-        ->press('Login')
-        ->seePageIs('/login')
-        ->see('These credentials do not match our records');
+    public function test_login(){ 
+        $response=$this->post('login',[
+            'email'=>'38600@ufp.edu.pt',
+            'password'=>'12345678',
+        ]);
+        $response->assertRedirect('/home');
     }
 }
