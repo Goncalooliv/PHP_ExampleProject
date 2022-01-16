@@ -117,4 +117,15 @@ class AnuncioController extends Controller
     {
         return $this->belongsTo(User::class, 'empresas_id', 'id');
     }
+
+    public function showMyAnuncios()
+    {
+        $anuncios = Empresas::where('empresas_id', Auth()->user()->id);
+        if(sizeof($anuncios) > 0){
+            return view('anuncios.meusAnuncios',['anuncios' => $anuncios]);
+        }else{
+            return redirect('/')->with('error','Este Empregador não possui Anuncios criados');
+        }
+        
+    }
 }

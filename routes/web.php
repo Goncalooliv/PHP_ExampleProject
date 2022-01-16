@@ -36,6 +36,7 @@ Route::get('anuncios/showanuncio/{anuncios}',[AnuncioController::class, 'show'])
 Route::get('anuncios/details/{anuncios}',[AnuncioController::class,'details']);
 Route::get('/user/profileEdit/{users}',[UserController::class,'profileEdit']);
 Route::post('/users/update/{users}', [UserController::class, 'updateAddress']);
+//Route::get('/anuncios/meusAnuncios',[AnuncioController::class, 'showMyAnuncios']);
 
 Route::get('/searchanuncio',[AnuncioController::class, 'searchan']);
 Route::get('/anuncios/create',[AnuncioController::class, 'create']);

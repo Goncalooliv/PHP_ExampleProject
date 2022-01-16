@@ -94,7 +94,7 @@
                                     <a class="dropdown-item" href="user/profile/{{Auth::user()->id}}">Perfil </a>
 
                                     @if(Auth::user()->tipo == 'Empregador')
-                                        <a class="dropdown-item" href="{{url('anuncios/meusAnuncios')}}">Anuncios</a>
+                                        <a class="dropdown-item" href="anuncios/meusAnuncios/{{Auth::user()->id}}">Anuncios</a>
                                     @endif
 
                                     @if (Auth::user()->isAdmin)
