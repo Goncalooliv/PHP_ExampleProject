@@ -9,10 +9,15 @@ use PHPUnit\Framework\TestCase;
 
 class LoginTest extends TestCase
 {
-    public function test_login()
+    public function loginWithWrongCredentials()
     {
-        $user = factory(User::class)->create();
-
-        $responde = $this->actingAs($user)->withSession(['foo' => 'bar'])->get('/home');
+        $this->visit('/')
+            ->see('Login')
+            ->type('unknown@example.org', 'email')
+            ->type('invalid-password', 'password')
+            ->check('remember')
+            ->press('Login')
+            ->seePageIs('/login')
+            ->see('These credentials do not match our records');
     }
 }
