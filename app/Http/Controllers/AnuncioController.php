@@ -121,7 +121,7 @@ class AnuncioController extends Controller
     public function showMyAnuncios()
     {
         $anuncios = Empresas::where('empresas_id', Auth()->user()->id);
-        if(sizeof($anuncios) > 0){
+        if(sizeof($anuncios)){
             return view('anuncios.meusAnuncios',['anuncios' => $anuncios]);
         }else{
             return redirect('/')->with('error','Este Empregador não possui Anuncios criados');
