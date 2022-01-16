@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\UserController;
+//use App\Http\Controllers\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

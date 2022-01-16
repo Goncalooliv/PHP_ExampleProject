@@ -3,7 +3,7 @@
 @section('content')
 
 <form action="{{url('/anuncios')}}" method="post" class="container" enctype="multipart/form-data">
-    @csrf {{-- <- Required for protection or the form is rejected --}}
+    @csrf <!-- - Required for protection or the form is rejected -->
     <div class="form-group">
         <label for="nome_empresa">Nome</label>
      <input id="nome_empresa" type="text" class="form-control" name="nome_empresa" value="{{old('nome')}}">
