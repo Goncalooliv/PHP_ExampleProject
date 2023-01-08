@@ -21,9 +21,11 @@ class EmpresasFactory extends Factory
             'pais'=>$this->faker->country(),
             'distrito'=>$this->faker->city(),
             'requisitos'=>$this->faker->text(),
-            'tipo'=>$this->faker->randomElement(['Full-Time','Voluntariado','Estagio']),
+            'tipo'=>$this->faker->randomElement(['Emprego','Voluntariado','Estagio']),
             'contacto'=>$this->faker->phoneNumber(),
             'empresas_id' => '1',
+            'premium' => $this->faker->randomElement(['0','1']),
+            'date' => $this->faker->date('d/m/Y','now'),
         ];
     }
 }

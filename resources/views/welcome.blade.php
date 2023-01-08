@@ -1,36 +1,47 @@
 @extends('layouts.app')
 
 @section('title')
-    Homepage
+Homepage
 @endsection
 
 @section('content')
-<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
-    <form>
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img style="height:560px;width:960px" src="{{URL::to('/carousel1.png')}}" class="d-block w-100" alt="first">
+<style>
+    #carouselSlide,
+    .carousel-inner,
+    .carousel-item,
+    .carousel-item.active {
+        size: cover;
+    }
+
+    .carousel-caption {
+        top: 40%;
+        bottom: initial;
+    }
+</style>
+<div id="carouselSlide" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="bg-image">
+                <img src="{{URL::to('/carousel1test.jpg')}}" class="d-block w-100" alt="...">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.5)"></div>
             </div>
-            <div class="carousel-item">
-                <img style="height:560px;width:960px" src="{{URL::to('/carousel2.png')}}" class="d-block w-100" alt="second">
-            </div>
-            <div class="carousel-item">
-                <img style="height:560px;width:960px" src="{{URL::to('/carousel3.png')}}" class="d-block w-100" alt="third">
+            <div class="carousel-caption d-none d-md-block">
+                <h1>Procurar emprego não precisa de ser difícil</h1>
+                <h5>Estamos aqui para te ajudar</h5>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true" style="position:relative;right:15%;"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true" style="position:relative;left:15%;"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        <div class="carousel-item">
+            <div class="bg-image">
+                <img src="{{URL::to('/carousel2.jpg')}}" class="d-block w-100" alt="...">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.5)"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Conhece a equipa de desenvolvimento</h2>
+                <a class="btn btn-dark" href="{{('/developteam')}}">Team</a>
+            </div>
+        </div>
+    </div>
 </div>
-@endsection
 
+
+@endsection

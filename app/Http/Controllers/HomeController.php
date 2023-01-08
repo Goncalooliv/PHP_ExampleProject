@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        //$this->middleware(['auth','verified']);
     }
 
     /**
@@ -22,12 +22,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+
+    public function homepage(){
+        return view("welcome");
     }
 
-    public function adminHome(){
+    public function developteam(){
+        return view("developteam");
+    }
+
+    public function loginConfirmation(){
+        return view("home");
+    }
+
+    public function loginAdmConfirmation(){
         return view('adminHome');
     }
 }

@@ -9,5 +9,17 @@ class Empresas extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['nome_empresa','posicao','categoria','pais','distrito','requisitos','tipo','contacto','empresas_id'];
+    protected $fillable = [
+        'nome_empresa',
+        'posicao',
+        'categoria',
+        'pais',
+        'distrito',
+        'requisitos',
+        'tipo',
+        'contacto',
+        'empresas_id',
+        'isPremium',
+        'premium',
+    ];
 }

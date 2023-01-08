@@ -24,9 +24,12 @@ class Empresa extends Migration
             $table->string('tipo');
             $table->string('contacto');
             $table->unsignedBigInteger('empresas_id');
+            $table->boolean('isPremium')->default(false);
+            $table->boolean('premium')->default(false);
+            $table->string('date')->default(date("d/m/Y"));
 
 
-            $table->foreign('empresas_id', 'empresas_id_fk')
+            $table->foreign('empresas_id')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('CASCADE')

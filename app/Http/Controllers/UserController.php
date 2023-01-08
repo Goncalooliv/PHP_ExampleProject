@@ -7,6 +7,7 @@ use App\Models\Empresas;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class UserController extends Controller
 {
@@ -15,35 +16,36 @@ class UserController extends Controller
         return view('user/show',['users'=>$users]);
     }
 
-    public function updateAddress(Request $request, User $users)
+    public function destroy($id)
     {
-        $request->validate([
-            'morada' => 'required',
-            'zipcode' => 'required',
-            'doorNumber' => 'required',
-            'phoneNumber' => 'required',
+        if(User::find($id)){
+            User::destroy($id);
+        }
+
+        return redirect('/dashboard/user');
+    }
+
+    public function userProfile($id)
+    {
+        $user = User::find($id);
+        return view('user.profile', compact('user'));
+    }
+
+    public function userProfileTest($id)
+    {
+        $users = User::find($id);
+        return view('user.editProfile', compact('users'));
+    }
+
+    public function update(Request $request, $id){
+        $user = User::where('id', $id)->update([
+            'name' => $request['nome'],
+            'morada' => $request['morada'],
+            'zipcode' => $request['zipcode'],
+            'phoneNumber' => $request['phoneNumber'],
         ]);
 
-        $users->update($request->all());
-
-        return redirect('/');    
-    }
-
-    public function destroy(User $users)
-    {
-        $users->delete();
-
-        return redirect('/dashboard');
-    }
-
-    public function profile(User $users)
-    {
-        return view('user/profile',['users'=>$users]);
-    }
-
-    public function profileEdit(User $users)
-    {
-        return view('user/profileEdit',['users'=>$users]);
+        return view('welcome');
     }
 
     public function anuncios()

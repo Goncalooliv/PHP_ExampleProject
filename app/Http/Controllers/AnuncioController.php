@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidatura;
 use Illuminate\Http\Request;
 use App\Models\Empresas;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 class AnuncioController extends Controller
 {
@@ -18,8 +21,18 @@ class AnuncioController extends Controller
 
     public function showAll() //listar todos os anuncios
     {
-        $anuncios = Empresas::all();
+        $anuncios = Empresas::orderBy('premium', 'desc')->paginate(5);
         return view ('anuncios.main',['anuncios'=>$anuncios]);
+    }
+
+    public function meusAnuncios(){
+        if(Auth::user()->tipo == 'Empregador'){
+            $anuncios = Empresas::where('empresas_id', Auth::user()->id)->paginate(5);
+            return view('anuncios.meusAnuncios', ['anuncios' => $anuncios]);
+        }
+        else{
+            return view('/');
+        }
     }
 
     public function AdminDashboard()
@@ -28,33 +41,97 @@ class AnuncioController extends Controller
             return redirect('/');
         }
             else{
-                $user = User::all();
-                $anuncio = Empresas::all();
-                return view('anuncios.info',['user'=>$user, 'anuncio'=>$anuncio]);
+                $userCount = User::count();
+                $anuncioCount = Empresas::count();
+                return view('dashboard',['countUser'=>$userCount, 'countAnuncio'=>$anuncioCount]);
+            }
+    }
+
+    public function dashboardUser(){
+        if (Auth::user()->isAdmin != '1'){
+            return redirect('/');
+        }
+            else{
+                $user = User::paginate(10);
+                return view('dashboarduser',['user'=>$user]);
+            }
+    }
+
+    public function dashboardAnuncio(){
+        if (Auth::user()->isAdmin != '1'){
+            return redirect('/');
+        }
+            else{
+                $anuncio = Empresas::paginate(10);
+                return view('dashboardanuncio',['anuncio'=>$anuncio]);
             }
     }
 
     public function searchan(Request $request){
-        $q = $request->get('q');
+        // Get the search value from the request
+        $search = $request->input('search');
 
-        $anuncios = Empresas::where ( 'nome_empresa', 'LIKE', '%' . $q . '%' )->orWhere ('posicao','LIKE','%' . $q . '%')->orWhere ('categoria','LIKE','%' . $q . '%')->orWhere ('pais','LIKE','%' . $q . '%')->orWhere ('distrito','LIKE','%' . $q . '%')->orWhere ('tipo','LIKE','%' . $q . '%')->get();
-        return view ( 'anuncios.search', ['anuncios'=>$anuncios] );
+        $anuncios = Empresas::orderBy('premium', 'desc')->orWhere('nome_empresa', 'LIKE', "%{$search}%" )->orWhere('pais', 'LIKE', "%{$search}%")->orWhere('posicao', 'LIKE', "%{$search}%" )->paginate(5);
+        return view ( 'anuncios.main', ['anuncios'=>$anuncios] );
     }
 
     public function show(Empresas $anuncios){
-        return view('anuncios/showanuncio',['anuncios' =>$anuncios]);
+        return view('anuncios.showanuncio',['anuncios' =>$anuncios]);
     }
 
-    public function details(Empresas $anuncios){
-        return view('anuncios/details',['anuncios'=>$anuncios]);
+    public function details($id){
+        $anuncios = Empresas::find($id);
+        $user = User::find($anuncios->empresas_id);
+        $candidaturas = Candidatura::where('idAnuncio', $id)->count();
+        return view('anuncios.details',['anuncios'=>$anuncios,'user' => $user,'candidatura' => $candidaturas]);
     }
 
-    public function create(){
-        if(Auth::user()->tipo){
-            return view('anuncios/create');
+    public function createPageShow(){
+        if(Auth::user()->tipo == 'Empregador' || Auth::user()->isAdmin == '1'){
+            return view('anuncios.create');
         }else{
             return redirect('/');
         }
+    }
+
+    public function createAnuncio(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'nome_empresa' => 'required',
+            'posicao' => 'required',
+            'categoria' => 'required',
+            'pais' => 'required',
+            'distrito' => 'required',
+            'requisitos' => 'required',
+            'tipo' => 'required',
+            'contacto' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return redirect('anuncios/create')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $validated = $validator->validated();
+        $date = date('d/m/Y');
+
+        Empresas::create([
+            'nome_empresa' => $validated['nome_empresa'],
+            'posicao' => $validated['posicao'],
+            'categoria' => $validated['categoria'],
+            'pais' => $validated['pais'],
+            'distrito' => $validated['distrito'],
+            'requisitos' => $validated['requisitos'],
+            'tipo' => $validated['tipo'],
+            'contacto' => $validated['contacto'],
+            'premium' => 0,
+            'empresas_id' => Auth()->user()->id,
+            'date' => $date,
+        ]);
+
+
+        return redirect('/meusAnuncios')->with('success', 'Anuncio created successfully.');
     }
 
     public function store(Request $request){
@@ -85,32 +162,34 @@ class AnuncioController extends Controller
         return redirect('/anuncios')->with('success', 'Anuncio created successfully.');
     }
 
-    public function edit(Empresas $anuncios)//editar anuncios
+    public function edit($id)//editar anuncios
     {
-        return view('anuncios.edit', ['anuncios' => $anuncios]);////retorna vista para o edit
+        $anuncio = Empresas::find($id);
+        return view('anuncios.edit', ['anuncios' => $anuncio]);////retorna vista para o edit
     }
 
-    public function update(Request $request, Empresas $anuncios){
-        $request->validate([
-            'nome_empresa' => 'required',
-            'posicao' => 'required',
-            'categoria' => 'required',
-            'pais' => 'required',
-            'distrito' => 'required',
-            'requisitos' => 'required',
-            'tipo' => 'required',
+    public function update(Request $request, $id){
+        $anuncio = Empresas::where('id', $id)
+        ->update([
+            'nome_empresa' => $request['nome_empresa'],
+            'posicao' => $request['posicao'],
+            'categoria' => $request['categoria'],
+            'pais' => $request['pais'],
+            'distrito' => $request['distrito'],
+            'requisitos' => $request['requisitos'],
+            'tipo' => $request['tipo'],
         ]);
 
-        $anuncios->update($request->all());
-
-        return redirect('/');
+        return redirect('/meusAnuncios');
     }
 
-    public function destroy(Empresas $anuncios)//carrega delete
+    public function destroy($id)//carrega delete
     {
-        $anuncios->delete();
+        if(Empresas::find($id)){
+            Empresas::destroy($id);
+        }
 
-        return redirect('/anuncios');
+        return redirect('/dashboard/anuncio');
     }
 
     public function AnnouncementCreator()

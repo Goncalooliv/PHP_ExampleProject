@@ -2,12 +2,15 @@
 
 @section('content')
 
-<div class = "container">
-    <div class = "row justify-content-center">
-        <div class = "col-md-8">
-            <div class = "card">
-                <div class = "card-header">Dashboard</div>
-                <div class = "card-body">
+<style>
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
+                <div class="card-body">
                     Welcome to the website!
                 </div>
             </div>
