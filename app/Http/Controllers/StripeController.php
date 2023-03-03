@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentConfirmationEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Empresas;
+use Illuminate\Support\Facades\Mail;
 use Session;
 use Stripe;
 
 class StripeController extends Controller
 {
+    /**
+     * Retorna a view responsável pelo pagamento do anúncio
+     */
     public function showpagamento($id)
     {
         $anuncioId = $id;
@@ -29,9 +34,10 @@ class StripeController extends Controller
                 "amount" => 100 * 5,
                 "currency" => "eur",
                 "source" => $request->stripeToken,
-                "description" => "Making test payment." 
+                "description" => "Making test payment."
                 
         ]);
-        return view('welcome')->with('success', 'Pagamento efetuado com sucesso');
+
+        return redirect()->route('selfAnnouncements');
     }
 }

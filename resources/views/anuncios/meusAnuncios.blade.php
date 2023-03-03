@@ -10,6 +10,11 @@
 
 
 <div class="container my-3">
+    @if (session('sucesso'))
+    <div class="alert alert-success">
+        {{ session('sucesso') }}
+    </div>
+    @endif
     <div class="row">
         @foreach($anuncios as $anuncio)
         <div class="card mb-4">

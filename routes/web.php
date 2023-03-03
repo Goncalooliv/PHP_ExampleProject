@@ -32,9 +32,9 @@ Route::get('/home', [HomeController::class, 'loginConfirmation'])->name('home');
 Route::get('admin/home', [HomeController::class, 'loginAdmConfirmation'])->name('admin.home')->middleware('tipo');
 
 Route::get('/anuncios', [AnuncioController::class, 'showAll']);
-Route::get('/dashboard',[AnuncioController::class, 'AdminDashboard']);
-Route::get('/dashboard/user', [AnuncioController::class, 'dashboardUser']);
-Route::get('/dashboard/anuncio',[AnuncioController::class, 'dashboardAnuncio']);
+Route::get('/dashboard',[AnuncioController::class, 'AdminDashboard'])->middleware('isAdmin');
+Route::get('/dashboard/user', [AnuncioController::class, 'dashboardUser'])->middleware('isAdmin');
+Route::get('/dashboard/anuncio',[AnuncioController::class, 'dashboardAnuncio'])->middleware('isAdmin');
 Route::get('/checkCandidaturas/{id}',[CandidaturaController::class, 'candidaturasEfetuadas']);
 Route::get('anuncios/details/{id}',[AnuncioController::class,'details']);
 Route::get('anuncios/create',[AnuncioController::class, 'createPageShow']);
@@ -44,7 +44,7 @@ Route::get('profile/{id}',[UserController::class, 'userProfile'])->name('user')-
 
 Route::get('users/edit/{id}',[UserController::class, 'userProfileTest'])->name('user')->middleware('verified');
 
-Route::get('/meusAnuncios', [AnuncioController::class, 'meusAnuncios']);
+Route::get('/meusAnuncios', [AnuncioController::class, 'meusAnuncios'])->name('selfAnnouncements');
 
 //Rotas de Auth
 Auth::routes(['verify'=>true]);
@@ -60,7 +60,7 @@ Route::post('/users/update/{id}', [UserController::class, 'update']);
 
 Route::get('/searchanuncio',[AnuncioController::class, 'searchan'])->name('searchanuncio');
 
-Route::get('anuncios/edit/{id}',[AnuncioController::class,'edit']);
+Route::get('anuncios/edit/{id}',[AnuncioController::class,'edit'])->middleware(['isAdmin','tipo']);
 Route::post('anuncios/update/{id}', [AnuncioController::class, 'update']);
 Route::post('anuncios/destroy/{id}', [AnuncioController::class, 'destroy']);
 

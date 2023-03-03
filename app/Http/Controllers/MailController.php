@@ -8,10 +8,10 @@ use App\Mail\TestMail;
 
 class MailController extends Controller
 {
-    public function sendEmail(){
+    /*public function sendEmail(){
 
         Mail::to('something@mail.com')->send(new TestMail());
 
         return view('welcome');
-    }
+    }*/
 }

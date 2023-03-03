@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CandidaturaConfirmEmail extends Mailable
+class PaymentConfirmationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
+        //
     }
 
     /**
@@ -29,8 +28,6 @@ class CandidaturaConfirmEmail extends Mailable
      */
     public function build()
     {
-        $subject = "Confirmação da Sua Candidatura";
-
-        return $this->markdown('candidaturaConfirm')->subject($subject);
+        return $this->view('view.name');
     }
 }

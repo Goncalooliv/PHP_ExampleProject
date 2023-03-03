@@ -7,10 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CandidaturaConfirmEmail extends Mailable
+class CandidaturaRecebidaEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $data;
     /**
      * Create a new message instance.
@@ -29,8 +28,8 @@ class CandidaturaConfirmEmail extends Mailable
      */
     public function build()
     {
-        $subject = "Confirmação da Sua Candidatura";
+        $subject = "Aviso de Candidatura Recebida";
 
-        return $this->markdown('candidaturaConfirm')->subject($subject);
+        return $this->markdown('candidaturaReceived')->subject($subject);
     }
 }

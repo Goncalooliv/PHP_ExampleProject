@@ -14,17 +14,20 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 class AnuncioController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Lista todos so Anuncios.
+     * 
      */
-
-    public function showAll() //listar todos os anuncios
+     public function showAll() //listar todos os anuncios
     {
         $anuncios = Empresas::orderBy('premium', 'desc')->paginate(5);
         return view ('anuncios.main',['anuncios'=>$anuncios]);
     }
 
+    /**
+     * Lista os anuncios pertencentes ao Utilizador que se encontra Autenticado.
+     * Retorna a vista responsável por apresentar estes dados.
+     * 
+     */
     public function meusAnuncios(){
         if(Auth::user()->tipo == 'Empregador'){
             $anuncios = Empresas::where('empresas_id', Auth::user()->id)->paginate(5);
@@ -35,50 +38,63 @@ class AnuncioController extends Controller
         }
     }
 
+
+    /**
+     * Dashboard dos Admins
+     * 
+     * 
+     */
     public function AdminDashboard()
     {
-        if (Auth::user()->isAdmin != '1'){
-            return redirect('/');
-        }
-            else{
-                $userCount = User::count();
-                $anuncioCount = Empresas::count();
-                return view('dashboard',['countUser'=>$userCount, 'countAnuncio'=>$anuncioCount]);
-            }
+        $userCount = User::count();
+        $anuncioCount = Empresas::count();
+        return view('dashboard',['countUser'=>$userCount, 'countAnuncio'=>$anuncioCount]);
     }
 
+    /**
+     * Dashboard onde os admins podem ver todos os users registados na plataforma
+     * 
+     */
     public function dashboardUser(){
-        if (Auth::user()->isAdmin != '1'){
-            return redirect('/');
-        }
-            else{
-                $user = User::paginate(10);
-                return view('dashboarduser',['user'=>$user]);
-            }
+        $user = User::paginate(10);
+        return view('dashboarduser',['user'=>$user]);
     }
 
+    /**
+     * Dashboard onde os admins podem ver todos os anuncios criados na plataforma
+     * 
+     * 
+     */
     public function dashboardAnuncio(){
-        if (Auth::user()->isAdmin != '1'){
-            return redirect('/');
-        }
-            else{
-                $anuncio = Empresas::paginate(10);
-                return view('dashboardanuncio',['anuncio'=>$anuncio]);
-            }
+        $anuncio = Empresas::paginate(10);
+        return view('dashboardanuncio',['anuncio'=>$anuncio]);
     }
 
+    /**
+     * function usada na caixa de pesquisa, que realiza as queries à base de dados 
+     * e devolve anuncios que correspondam às pesquisas
+     * 
+     */
     public function searchan(Request $request){
         // Get the search value from the request
         $search = $request->input('search');
 
-        $anuncios = Empresas::orderBy('premium', 'desc')->orWhere('nome_empresa', 'LIKE', "%{$search}%" )->orWhere('pais', 'LIKE', "%{$search}%")->orWhere('posicao', 'LIKE', "%{$search}%" )->paginate(5);
+        $anuncios = Empresas::orWhere('nome_empresa', 'LIKE', "%{$search}%")->orWhere('pais', 'LIKE', "%{$search}%")->orWhere('posicao', 'LIKE', "%{$search}%")->orWhere('distrito', 'LIKE', "%{$search}%")->orderBy('premium', 'desc')->paginate(5);
         return view ( 'anuncios.main', ['anuncios'=>$anuncios] );
     }
 
+    /**
+     * Usado para visualizar os anuncios
+     * 
+     */
     public function show(Empresas $anuncios){
         return view('anuncios.showanuncio',['anuncios' =>$anuncios]);
     }
 
+    /**
+     * Usado para inspecionar os anuncios, ver os detalhes do mesmo e até candidatar-se
+     * 
+     */
     public function details($id){
         $anuncios = Empresas::find($id);
         $user = User::find($anuncios->empresas_id);
@@ -86,6 +102,11 @@ class AnuncioController extends Controller
         return view('anuncios.details',['anuncios'=>$anuncios,'user' => $user,'candidatura' => $candidaturas]);
     }
 
+
+    /**
+     * Controlo de permissões para ver se o user pode ou nao aceder à pagina de criação de anuncios
+     * 
+     */
     public function createPageShow(){
         if(Auth::user()->tipo == 'Empregador' || Auth::user()->isAdmin == '1'){
             return view('anuncios.create');
@@ -94,6 +115,12 @@ class AnuncioController extends Controller
         }
     }
 
+
+    /**
+     * Responsavel pelo formulário de criação, que após os dados inseridos
+     * cria o anúncio e guarda na base de dados 
+     *
+     */
     public function createAnuncio(Request $request){
 
         $validator = Validator::make($request->all(),[
@@ -162,12 +189,19 @@ class AnuncioController extends Controller
         return redirect('/anuncios')->with('success', 'Anuncio created successfully.');
     }
 
+
+    /**
+     * Função Responsável pela Edição de anuncios na plataforma
+     */
     public function edit($id)//editar anuncios
     {
         $anuncio = Empresas::find($id);
         return view('anuncios.edit', ['anuncios' => $anuncio]);////retorna vista para o edit
     }
 
+    /**
+     * Vai atualizar os dados colocados nos campos do anúncio na base de dados
+     */
     public function update(Request $request, $id){
         $anuncio = Empresas::where('id', $id)
         ->update([
@@ -183,6 +217,10 @@ class AnuncioController extends Controller
         return redirect('/meusAnuncios');
     }
 
+    /**
+     * Usado para eliminar os anúncios
+     * 
+     */
     public function destroy($id)//carrega delete
     {
         if(Empresas::find($id)){
@@ -190,21 +228,5 @@ class AnuncioController extends Controller
         }
 
         return redirect('/dashboard/anuncio');
-    }
-
-    public function AnnouncementCreator()
-    {
-        return $this->belongsTo(User::class, 'empresas_id', 'id');
-    }
-
-    public function showMyAnuncios()
-    {
-        $anuncios = Empresas::where('empresas_id', Auth()->user()->id);
-        if(sizeof($anuncios)){
-            return view('anuncios.meusAnuncios',['anuncios' => $anuncios]);
-        }else{
-            return redirect('/')->with('error','Este Empregador não possui Anuncios criados');
-        }
-        
     }
 }

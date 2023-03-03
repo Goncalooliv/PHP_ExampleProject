@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('zipcode');
             $table->string('tipo')->nullable();
             $table->string('phoneNumber');
+            $table->string('image')->default('user.jpg');
         });
     }
 

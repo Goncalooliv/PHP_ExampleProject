@@ -32,6 +32,11 @@
 </style>
 
 <div class="container-fluid py-3">
+  @if (session('status'))
+  <div class="alert alert-success">
+    {{ session('status') }}
+  </div>
+  @endif
   <div class="row">
     <div class="col-lg-3">
       <div class="card mb-4">
@@ -63,13 +68,14 @@
       </form>
       @endif
       @if($anuncios->premium == 0 && Auth::user()->id == $anuncios->empresas_id)
-      <a class="btn btn-dark" href="{{ url('/pagamento',$anuncios->id)}}">Premium</a>
+      <a class="btn btn-dark mb-2" href="{{ url('/pagamento',$anuncios->id)}}">Premium</a>
       @endif
       @if(Auth::user()->id == $anuncios->empresas_id)
-      <a class="btn btn-dark" href="{{ url('anuncios/edit',$anuncios->id)}}">Edit</a>
-      <a class="btn btn-dark" href="{{ url('checkCandidaturas',$anuncios->id) }}"> Candidaturas, {{$candidatura}}</a>
+      <a class="btn btn-dark mb-2" href="{{ url('anuncios/edit',$anuncios->id)}}">Edit</a>
+      <a class="btn btn-dark mb-2" href="{{ url('checkCandidaturas',$anuncios->id) }}"> Candidaturas,
+        {{$candidatura}}</a>
       @endif
-      <a class="btn btn-dark" href="{{('/anuncios')}}">Back</a>
+      <a class="btn btn-dark mb-2" href="{{('/anuncios')}}">Back</a>
     </div>
     <div class=" col-lg">
       <div class="card mb-4">
@@ -142,5 +148,6 @@
       @endif
     </div>
   </div>
+
 </div>
 @endsection
